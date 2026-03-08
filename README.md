@@ -1,4 +1,62 @@
-# autoresearch-macos
+# autoresearch-macos-swiftui
+
+This fork adds a **native macOS SwiftUI dashboard app** (`AutoResearchApp/`) on top of the [autoresearch-macos](https://github.com/karpathy/autoresearch) project. The app lets you monitor experiments, view live training metrics, and start/stop training runs from a GUI — no terminal required.
+
+## SwiftUI Dashboard App
+
+### What it adds
+
+A native macOS app with:
+- **Live dashboard** — real-time training metrics (loss, tok/sec, MFU, progress) via Swift Charts
+- **Experiment browser** — sortable table of all runs parsed from `results.tsv`
+- **Control panel** — start/stop training and data preparation with one click
+- **Log viewer** — scrolling real-time stdout output
+- **Settings** — configure project directory and `uv` binary path
+
+### Requirements
+
+- **macOS 14+ (Sonoma)** on Apple Silicon
+- **Xcode 16+** (or the Swift 5.10+ toolchain)
+- **[uv](https://docs.astral.sh/uv/)** — Python package manager (`curl -LsSf https://astral.sh/uv/install.sh | sh`)
+- **[XcodeGen](https://github.com/yonaskolb/XcodeGen)** (optional, only needed to regenerate the `.xcodeproj`) — `brew install xcodegen`
+
+### Running the app
+
+```bash
+# Option A: Open in Xcode
+open AutoResearchApp/AutoResearchApp.xcodeproj
+
+# Option B: Build and run from the command line
+cd AutoResearchApp
+swift build && swift run
+```
+
+On first launch, click **Prepare Data** to download the dataset and build the tokenizer before starting training.
+
+### Assumptions & defaults
+
+- **Project directory** defaults to `~/autoresearch-macos`. If you cloned the repo elsewhere, update the path in the app's **Settings** (gear icon in the sidebar).
+- **`uv` path** is auto-detected from common install locations (`~/.local/bin/uv`, `/opt/homebrew/bin/uv`, `/usr/local/bin/uv`, `~/.cargo/bin/uv`). If auto-detection fails, set the full path manually in Settings.
+- The app runs **without App Sandbox** so it can spawn `uv` processes and watch files on disk.
+
+### Troubleshooting
+
+| Error | Cause | Fix |
+|---|---|---|
+| `The file "autoresearch-macos" doesn't exist` | Project directory path is wrong | Open Settings and point it to your cloned repo |
+| `env: uv: No such file or directory` | `uv` not found (GUI apps don't inherit shell PATH) | Set the full `uv` path in Settings (e.g. `~/.local/bin/uv`) |
+| `tokenizer.pkl not found` | Data not prepared yet | Click **Prepare Data** before starting training |
+
+### Regenerating the Xcode project
+
+If you add or remove source files:
+
+```bash
+cd AutoResearchApp
+xcodegen generate
+```
+
+---
 
 ![teaser](progress.png)
 

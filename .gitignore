@@ -18,3 +18,8 @@ AGENTS.md
 
 # Experimental code/artifacts
 dev/
+
+.idea/
+.claude/
+AutoResearchApp/AutoResearchApp.xcodeproj/
+AutoResearchApp/.build

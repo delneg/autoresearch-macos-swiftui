@@ -1,0 +1,44 @@
+name: AutoResearchApp
+options:
+  bundleIdPrefix: com.autoresearch
+  deploymentTarget:
+    macOS: "14.0"
+  xcodeVersion: "16.0"
+  generateEmptyDirectories: false
+
+targets:
+  AutoResearchApp:
+    type: application
+    platform: macOS
+    sources:
+      - Sources
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.autoresearch.AutoResearchApp
+        PRODUCT_NAME: AutoResearchApp
+        SWIFT_VERSION: "5.10"
+        MACOSX_DEPLOYMENT_TARGET: "14.0"
+        INFOPLIST_GENERATION_MODE: GeneratedFile
+        GENERATE_INFOPLIST_FILE: YES
+        CODE_SIGN_STYLE: Automatic
+        ENABLE_APP_SANDBOX: NO
+        ENABLE_HARDENED_RUNTIME: NO
+    info:
+      path: Info.plist
+      properties:
+        CFBundleDisplayName: AutoResearch
+        CFBundleShortVersionString: "1.0"
+        CFBundleVersion: "1"
+        LSMinimumSystemVersion: "14.0"
+
+  AutoResearchAppTests:
+    type: bundle.unit-test
+    platform: macOS
+    sources:
+      - Tests
+    dependencies:
+      - target: AutoResearchApp
+    settings:
+      base:
+        SWIFT_VERSION: "5.10"
+        GENERATE_INFOPLIST_FILE: YES
